@@ -22,6 +22,8 @@ namespace PdfSearcher
                 MessageBox.Show(fnfe.Message);
             } catch (DirectoryNotFoundException) {
                 MessageBox.Show(TextUsed.DIRECTORY_NOT_FOUND_TEXT);
+            } catch (NoPagesException aoore) {
+                MessageBox.Show(aoore.Message);            
             } catch (Exception ex) {
                 MessageBox.Show(TextUsed.CRITICAL_EXCEPTION_TEXT + ex.Message);
             } finally {

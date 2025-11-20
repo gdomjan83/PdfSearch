@@ -22,7 +22,7 @@ namespace PdfSearcher {
 
 
         public const string WRONG_MONTH_EXCEPTION_TEXT = "Nem megfelelő formátumú hónap. (Helyesen például: 2025.09)";
-        public const string FILE_NOT_FOUND_TEXT_1 = "Nem megfelelő formátumú hónap. (Helyesen például: 2025.09)";
+        public const string FILE_NOT_FOUND_TEXT_1 = "Nem megfelelő az elérési útvonal.";
         public const string FILE_NOT_FOUND_TEXT_2 = "Ellenőrizze az eléséri útvonalat, illetve győzödjön meg, " +
             "hogy az adott hónap bérkarton fájlja megtalálható az adott mappában. A fájlnév formátuma például: 2025.09.pdf";
         public const string NAMES_NOT_FOUND_TEXT = "Kérem adja meg a keresni kívánt neveket.";
@@ -36,6 +36,7 @@ namespace PdfSearcher {
         public const string DIRECTORY_NOT_FOUND_TEXT = "Nem létezik a Dokumentumok/lapolvasás elérési útvonal. A pdf fájl nem került elmentésre.";
         public const string DIRECTORY_NOT_OPENED_TEXT = "Nem sikerült megnyitni a Dokumentumok/lapolvasás mappát.";
         public const string CRITICAL_EXCEPTION_TEXT = "Ismeretlen hiba lépett fel a program futtatása során.\n\n";
+        public const string NO_PAGES_EXCEPTION_TEXT = "Egyik oldal sem tartalmazta a keresett neveket.";
 
 
         public const string FOLDER_PATH = "\\\\GMFTS.uni-pannon.hu\\munkahely\\Közös Dokumentumok\\!Szervezetek\\Pénzügyi Főosztály\\Projekt és keretgazdálkodási Csoport\\bérkarton\\Digitális projekt bérkartonok";
@@ -46,7 +47,7 @@ namespace PdfSearcher {
             $"oldalakat az alkalmazás a Dokumentumok/lapolvasás mappába egy külön PDF fájlba elmenti.\n\nAz alkalmazás használata:\n\n" +
             $"1. A hónap mezőbe be kell írni, hogy melyik hónap bérkartonjait keressük, a következő formátumban: 2025.09\n\n" +
             $"2. A keresett nevek ablakba beírni, vagy bemásolni azokat a neveket, amelyekhez az oldalszámokat meg kívánjuk kapni. Az alkalmazás " +
-            $"képes több név keresésére.Minden névnek külön sorban kell szerepelnie.\n\n" +
+            $"képes több név keresésére. Minden névnek külön sorban kell szerepelnie.\n\n" +
             $"3. Az alkalmazás ablakának alján látható az az elérési útvonal, ahol a bérkarton fájloknak lennie kell. Ha ez megváltozik, akkor " +
             $"át kell írni az elérési útvonalat is. A fájlok neveinek a következő formátumban kell lennie: 2025.09\n\n" +
             $"4. A keresés indítása gommbal indítható a keresés.\n\n" +

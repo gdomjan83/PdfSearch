@@ -6,6 +6,9 @@ namespace PdfSearcher {
 
         public void ExtractPdf(List<int> pages, string path) {
             using (PdfDocument document = PdfReader.Open(path, PdfDocumentOpenMode.Import)) {
+                if (pages.Count <= 0) {
+                    throw new NoPagesException(TextUsed.NO_PAGES_EXCEPTION_TEXT);                 
+                }
                 var output = new PdfDocument();
                 pages.ForEach(p => output.AddPage(document.Pages[p - 1]));
                 output.Save(TextUsed.EXPORT_PATH + GetFileNameFromInputPath(path));
