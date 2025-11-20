@@ -1,1 +1,2 @@
-PDF Search application used for work at the university.
+PDF Search and export application used for work at the university.
+
