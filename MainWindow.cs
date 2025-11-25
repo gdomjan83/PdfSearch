@@ -3,21 +3,26 @@ namespace PdfSearcher
     public partial class MainWindow : Form {
         private SearchLogic _searchLogic;
         private PdfExtractor _pdfExtractor;
+        private UIController _uiController;
        
         public MainWindow() {
             InitializeComponent();
             SetupMainWindowFormText();
             _searchLogic = new SearchLogic();
             _pdfExtractor = new PdfExtractor();
+            _uiController = new UIController();
         }
 
         private void RunSearch(object sender, EventArgs e) {
             try {
-                PageSearch();
-                PageExport();
+                List<string> months = CreateMonthList(textBox1.Text, textBox3.Text);
+                _searchLogic.ResetData();
+                months.ForEach(m => SearchAndExport(m));
                 MessageBox.Show(TextUsed.FINISHED_TEXT);
             } catch (ArgumentException ae) {
                 MessageBox.Show(ae.Message);
+            } catch (MonthAreNotInOrderException mnioe) {
+                MessageBox.Show(mnioe.Message);            
             } catch (FileNotFoundException fnfe) {
                 MessageBox.Show(fnfe.Message);
             } catch (DirectoryNotFoundException) {
@@ -32,8 +37,20 @@ namespace PdfSearcher
             }
         }
 
+        private void SearchAndExport(string month) {            
+            PageSearch(month);
+            List<int> resultPages = _searchLogic.Resultpages;
+            string exportPath = _searchLogic.InputFilePath;
+            PageExport(resultPages, exportPath);            
+        }
+
+        private List<string> CreateMonthList(string startMonth, string endMonth) {
+            return _uiController.CreateMonthListFromStartToEnd(startMonth, endMonth);
+        }
+
         private void ResetToDefault(object sender, EventArgs e) {
             textBox1.Text = "";
+            textBox3.Text = "";
             richTextBox1.Text = "";
             richTextBox2.Text = "";
             textBox2.Text = TextUsed.FOLDER_PATH;
@@ -47,23 +64,25 @@ namespace PdfSearcher
             MessageBox.Show(TextUsed.HELP_TEXT);
         }
 
-        private void PageSearch() {
+        private void PageSearch(string month) {
             button1.Text = TextUsed.SEARCH_IN_PROGRESS;
             button1.Enabled = false;
-            string textResult = _searchLogic.RunSearch(textBox1.Text, textBox2.Text, richTextBox1.Lines);
+            string textResult = _searchLogic.RunSearch(month, textBox2.Text, richTextBox1.Lines);
             WriteResultToTextBox(textResult);
             richTextBox2.SelectionStart = richTextBox2.Text.Length;
             richTextBox2.ScrollToCaret();
         }
 
-        private void PageExport() {
+        private void PageExport(List<int> resultPages, string filePath) {
             button1.Text = TextUsed.EXPORT_IN_PROGRESS;
-            _pdfExtractor.ExtractPdf(_searchLogic.Resultpages, _searchLogic.InputFilePath);
+            _pdfExtractor.ExtractPdf(resultPages, filePath);
         }
 
         private void SetupMainWindowFormText() {
             button1.Text = TextUsed.START_SEARCH;
             textBox2.Text = TextUsed.FOLDER_PATH;
+            textBox1.PlaceholderText = TextUsed.START_MONTH_PLACEHOLDER;
+            textBox3.PlaceholderText = TextUsed.END_MONTH_PLACEHOLDER;
             label1.Text = TextUsed.MONTH_INPUT;
             label2.Text = TextUsed.PATH_LABEL;
             label3.Text = TextUsed.NAMES_LABEL;

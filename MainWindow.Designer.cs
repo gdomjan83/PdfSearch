@@ -42,12 +42,14 @@ namespace PdfSearcher
             button3 = new Button();
             folderBrowserDialog1 = new FolderBrowserDialog();
             button4 = new Button();
+            textBox3 = new TextBox();
             SuspendLayout();
             // 
             // textBox1
             // 
             textBox1.Location = new Point(230, 28);
             textBox1.Name = "textBox1";
+            textBox1.PlaceholderText = "Hónaptól";
             textBox1.Size = new Size(104, 23);
             textBox1.TabIndex = 0;
             // 
@@ -163,11 +165,20 @@ namespace PdfSearcher
             button4.UseVisualStyleBackColor = true;
             button4.Click += OpenSaveDirectory;
             // 
+            // textBox3
+            // 
+            textBox3.Location = new Point(389, 28);
+            textBox3.Name = "textBox3";
+            textBox3.PlaceholderText = "Hónapig";
+            textBox3.Size = new Size(104, 23);
+            textBox3.TabIndex = 13;
+            // 
             // MainWindow
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(835, 577);
+            Controls.Add(textBox3);
             Controls.Add(button4);
             Controls.Add(button3);
             Controls.Add(label5);
@@ -205,5 +216,6 @@ namespace PdfSearcher
         private Button button3;
         private FolderBrowserDialog folderBrowserDialog1;
         private Button button4;
+        private TextBox textBox3;
     }
 }

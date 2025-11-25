@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 
 namespace PdfSearcher {
     internal class UIController {
@@ -14,7 +9,7 @@ namespace PdfSearcher {
             if (matcher.Success) {
                 return true;
             }
-            throw new ArgumentException(TextUsed.WRONG_MONTH_EXCEPTION_TEXT);
+            throw new ArgumentException($"{TextUsed.WRONG_MONTH_EXCEPTION_TEXT}: {date}");
         }
 
         public bool ValidateIfMonthFileExists(string filePath) {
@@ -35,6 +30,59 @@ namespace PdfSearcher {
                 return true;
             }
             throw new ArgumentException(TextUsed.NAMES_NOT_FOUND_TEXT);
+        }
+
+        public List<string> CreateMonthListFromStartToEnd(string start, string end) {
+            List<string> result = new List<string>();
+
+            ValidateIfMonthInCorrectForm(start);
+            if (!String.IsNullOrEmpty(end) && !start.Equals(end)) {
+                ValidateIfMonthInCorrectForm(end);
+                ValidateIfEndMonthIsAfterStartMonth(start, end);
+            } else {
+                result.Add(start);
+                return result;
+            }
+
+            string currentMonth = start;
+            bool sameMonth = false;
+            while (!sameMonth) {
+                if (currentMonth.Equals(end)) {
+                    sameMonth = true;
+                }
+                result.Add(currentMonth);
+                currentMonth = IncrementYearMonth(currentMonth);
+            }
+            return result;
+        }
+
+        private bool ValidateIfEndMonthIsAfterStartMonth(string start, string end) {
+            var startParts = start.Split('.');
+            int startYear = int.Parse(startParts[0]);
+            int startMonth = int.Parse(startParts[1]);
+
+            var endParts = end.Split('.');
+            int endYear = int.Parse(endParts[0]);
+            int endMonth = int.Parse(endParts[1]);
+
+            if (startYear > endYear) throw new MonthAreNotInOrderException(TextUsed.MONTH_NOT_IN_ORDER_EXCEPTION_TEXT);
+            if (startYear == endYear && startMonth > endMonth) throw new MonthAreNotInOrderException(TextUsed.MONTH_NOT_IN_ORDER_EXCEPTION_TEXT);
+            return true;
+        }
+
+        private string IncrementYearMonth(string date) {
+            // ym format: "YYYY.MM"
+            var parts = date.Split('.');
+            int year = int.Parse(parts[0]);
+            int month = int.Parse(parts[1]);
+
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            }
+
+            return $"{year:D4}.{month:D2}";
         }
     }
 }

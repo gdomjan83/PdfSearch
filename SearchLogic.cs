@@ -9,8 +9,7 @@ namespace PdfSearcher {
         public List<int> Resultpages {  get; set; }
         public string InputFilePath { get; set; }
         public const string EXCLUDED_TERM = "jegyzék R";
-        public const int PAGES_IN_ONE_LINE = 12;
-        
+        public const int PAGES_IN_ONE_LINE = 12;        
         public UIController UIController { get; set; }
         public SearchLogic() { 
             UIController = new UIController();
@@ -20,11 +19,12 @@ namespace PdfSearcher {
         }
 
         public string RunSearch(string pdfMonthText, string folderPath, string[] names) {
+            Resultpages = new List<int>();
+            _nameNotFoundInFile = false;
             string pdfMonth = CreateFilePath(pdfMonthText, folderPath);
-            ResetData();
             UIController.ValidateIfNamesArePresent(names);
             UIController.ValidateIfMonthFileExists(pdfMonth);
-
+            _endResultText += $"{pdfMonthText} hónapban:\n";
             List<string> wordsToSearch = SplitNameList(names);
             SortedDictionary<string, int> result = FindTextInPdf(pdfMonth, wordsToSearch, folderPath);
 
@@ -126,7 +126,7 @@ namespace PdfSearcher {
                     }
                 }              
             }
-            return sb.ToString();
+            return sb.ToString() + "\n\n";
         }   
         
         private string CreateResultPages(SortedDictionary<string, int> result) {
@@ -136,7 +136,7 @@ namespace PdfSearcher {
             string text = $"\n{TextUsed.RESULTS_TEXT}\n\n{string.Join(",", Resultpages)}";
             _endResultText += BreakTextToChunks(text, PAGES_IN_ONE_LINE);
             if (_nameNotFoundInFile) {
-                _endResultText += $"\n\n{TextUsed.NAME_NOT_FOUND_END_TEXT}";
+                _endResultText += TextUsed.NAME_NOT_FOUND_END_TEXT;
             }
             return _endResultText;
         }
