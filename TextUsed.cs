@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PdfSearcher {
     internal class TextUsed {
-        public const string VERSION = "1.2";
+        public const string VERSION = "1.21";
         public const string START_SEARCH = "Keresés indítása";
         public const string MONTH_INPUT = "Hónap (formátum: 2025.09):";
         public const string PATH_LABEL = "Elérési útvonal (csak akkor módosítandó, ha más mappába kerülnek a bérkarton fájlok):";
@@ -42,7 +42,7 @@ namespace PdfSearcher {
         public const string MONTH_NOT_IN_ORDER_EXCEPTION_TEXT = "Hiba: a záró hónap megelőzi a kezdő hónapot!";
 
 
-        public const string FOLDER_PATH = "\\\\GMFTS.uni-pannon.hu\\munkahely\\Közös Dokumentumok\\!Szervezetek\\Pénzügyi Főosztály\\Projekt és keretgazdálkodási Csoport\\bérkarton\\Digitális projekt bérkartonok";
+        public const string FOLDER_PATH = "G:\\GI-PPO\\bérkarton\\Digitális projekt bérkartonok";
         public const string EXPORT_PATH = "C:\\Users\\felhasználó\\Documents\\lapolvasás\\";
 
         public const string HELP_TEXT = $"A {WINDOWS_TITLE} alkalmazás segítségével a bérkarton pdf fájlokban lehetőség van neveket keresni," +
